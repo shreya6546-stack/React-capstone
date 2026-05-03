@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-function Navbar() {
+function Navbar({ wishlistCount = 0 }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const closeMenu = () => setIsOpen(false)
@@ -10,7 +10,7 @@ function Navbar() {
     <header className="site-header">
       <nav className="navbar">
         <NavLink className="logo" to="/" onClick={closeMenu}>
-          TripPlanner
+          Travique
         </NavLink>
         <button
           className="menu-toggle"
@@ -29,6 +29,10 @@ function Navbar() {
           </NavLink>
           <NavLink to="/destinations" onClick={closeMenu}>
             Destinations
+          </NavLink>
+          <NavLink to="/wishlist" onClick={closeMenu}>
+            Wishlist
+            {wishlistCount > 0 && <span className="nav-count">{wishlistCount}</span>}
           </NavLink>
           <NavLink to="/plan-trip" onClick={closeMenu}>
             Plan Trip

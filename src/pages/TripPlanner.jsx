@@ -26,7 +26,7 @@ function TripPlanner() {
   const [tripPlan, setTripPlan] = useState(null)
 
   useEffect(() => {
-    document.title = 'Plan Trip | TripPlanner'
+    document.title = 'Plan Trip | Travique'
   }, [])
 
   const updateField = (field, value) => {

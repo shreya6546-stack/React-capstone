@@ -5,7 +5,7 @@ import InputField from '../components/InputField'
 import DestinationCard from '../components/DestinationCard'
 import { destinations } from '../data/destinations'
 
-function Home() {
+function Home({ wishlistIds = [], onToggleWishlist }) {
   const navigate = useNavigate()
   const [search, setSearch] = useState({
     destination: '',
@@ -15,7 +15,7 @@ function Home() {
   const featured = destinations.slice(0, 3)
 
   useEffect(() => {
-    document.title = 'TripPlanner | Modern Travel Planner'
+    document.title = 'Travique | Modern Travel Planner'
   }, [])
 
   const handleSearch = (event) => {
@@ -75,7 +75,12 @@ function Home() {
         </div>
         <div className="destination-grid">
           {featured.map((destination) => (
-            <DestinationCard destination={destination} key={destination.id} />
+            <DestinationCard
+              destination={destination}
+              isWishlisted={wishlistIds.includes(destination.id)}
+              key={destination.id}
+              onToggleWishlist={onToggleWishlist}
+            />
           ))}
         </div>
       </section>

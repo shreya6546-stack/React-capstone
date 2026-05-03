@@ -1,7 +1,7 @@
 import DestinationCard from '../components/DestinationCard'
 import { destinations } from '../data/destinations'
 
-function Destinations() {
+function Destinations({ wishlistIds = [], onToggleWishlist }) {
   return (
     <section className="page-section">
       <div className="page-hero compact">
@@ -14,7 +14,12 @@ function Destinations() {
       </div>
       <div className="destination-grid">
         {destinations.map((destination) => (
-          <DestinationCard destination={destination} key={destination.id} />
+          <DestinationCard
+            destination={destination}
+            isWishlisted={wishlistIds.includes(destination.id)}
+            key={destination.id}
+            onToggleWishlist={onToggleWishlist}
+          />
         ))}
       </div>
     </section>
