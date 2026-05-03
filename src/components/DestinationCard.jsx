@@ -3,14 +3,19 @@ import WeatherBadge from './WeatherBadge'
 import { formatCurrency } from '../utils/tripPlanner'
 
 function RatingStars({ rating, reviews }) {
-  const roundedRating = Math.round(rating)
+  const starFills = Array.from({ length: 5 }, (_, index) =>
+    Math.min(Math.max(rating - index, 0), 1) * 100,
+  )
 
   return (
     <div className="rating-row" aria-label={`${rating} out of 5 stars from ${reviews} reviews`}>
       <div className="rating-stars" aria-hidden="true">
-        {Array.from({ length: 5 }, (_, index) => (
-          <span className={index < roundedRating ? 'filled' : ''} key={index}>
-            ★
+        {starFills.map((fill, index) => (
+          <span className="rating-star" key={index}>
+            <span className="rating-star-empty">&#9733;</span>
+            <span className="rating-star-fill" style={{ width: `${fill}%` }}>
+              &#9733;
+            </span>
           </span>
         ))}
       </div>

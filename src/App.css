@@ -367,8 +367,24 @@ main {
   letter-spacing: 0;
 }
 
-.rating-stars .filled {
+.rating-star {
+  position: relative;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+}
+
+.rating-star-empty {
+  color: #475569;
+}
+
+.rating-star-fill {
   color: #facc15;
+  inset: 0;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
 }
 
 .rating-row strong {
