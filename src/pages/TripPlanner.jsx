@@ -71,10 +71,23 @@ function TripPlanner() {
   }
 
   return (
-    <section className="page-section planner-layout">
+    <section className="page-section planner-page">
+      <div className="planner-hero">
+        <div>
+          <p className="eyebrow">Create your itinerary</p>
+          <h1>Plan a trip in minutes</h1>
+          <p>
+            Choose your destination, dates, budget, and group size to generate a day-wise travel
+            plan.
+          </p>
+        </div>
+        <div className="planner-hero-stat">
+          <span>Smart plan</span>
+          <strong>{tripPlan ? `${tripPlan.days} days` : 'Ready'}</strong>
+        </div>
+      </div>
+
       <div className="planner-card">
-        <p className="eyebrow">Create your itinerary</p>
-        <h1>Plan a trip in minutes</h1>
         <form className="planner-form" onSubmit={handleSubmit}>
           <InputField
             label="Destination"
@@ -83,41 +96,37 @@ function TripPlanner() {
             error={errors.destination}
             onChange={(event) => updateField('destination', event.target.value)}
           />
-          <div className="form-row">
-            <InputField
-              label="Start Date"
-              type="date"
-              value={formValues.startDate}
-              error={errors.startDate}
-              onChange={(event) => updateField('startDate', event.target.value)}
-            />
-            <InputField
-              label="End Date"
-              type="date"
-              value={formValues.endDate}
-              error={errors.endDate}
-              onChange={(event) => updateField('endDate', event.target.value)}
-            />
-          </div>
-          <div className="form-row">
-            <InputField
-              label="Budget"
-              type="number"
-              min="1000"
-              placeholder="50000"
-              value={formValues.budget}
-              error={errors.budget}
-              onChange={(event) => updateField('budget', event.target.value)}
-            />
-            <InputField
-              label="Number of Travelers"
-              type="number"
-              min="1"
-              value={formValues.travelers}
-              error={errors.travelers}
-              onChange={(event) => updateField('travelers', event.target.value)}
-            />
-          </div>
+          <InputField
+            label="Start Date"
+            type="date"
+            value={formValues.startDate}
+            error={errors.startDate}
+            onChange={(event) => updateField('startDate', event.target.value)}
+          />
+          <InputField
+            label="End Date"
+            type="date"
+            value={formValues.endDate}
+            error={errors.endDate}
+            onChange={(event) => updateField('endDate', event.target.value)}
+          />
+          <InputField
+            label="Budget"
+            type="number"
+            min="1000"
+            placeholder="50000"
+            value={formValues.budget}
+            error={errors.budget}
+            onChange={(event) => updateField('budget', event.target.value)}
+          />
+          <InputField
+            label="Travelers"
+            type="number"
+            min="1"
+            value={formValues.travelers}
+            error={errors.travelers}
+            onChange={(event) => updateField('travelers', event.target.value)}
+          />
           <Button type="submit" className="wide-button">
             Generate Trip Plan
           </Button>

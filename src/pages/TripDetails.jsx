@@ -8,16 +8,28 @@ import { formatCurrency, generateTripPlan } from '../utils/tripPlanner'
 function TripDetails() {
   const location = useLocation()
 
+  const selectedDestination = useMemo(() => {
+    if (location.state?.destination) return location.state.destination
+
+    const destinationName = location.state?.tripPlan?.destination
+    if (!destinationName) return destinations[0]
+
+    return (
+      destinations.find(
+        (destination) => destination.name.toLowerCase() === destinationName.toLowerCase(),
+      ) ?? null
+    )
+  }, [location.state])
+
   const tripPlan = useMemo(() => {
     if (location.state?.tripPlan) return location.state.tripPlan
 
     if (location.state?.destination) {
-      const destination = location.state.destination
       return generateTripPlan({
-        destination: destination.name,
+        destination: selectedDestination.name,
         startDate: '2026-06-10',
         endDate: '2026-06-14',
-        budget: destination.price,
+        budget: selectedDestination.price,
         travelers: 2,
       })
     }
@@ -29,7 +41,12 @@ function TripDetails() {
       budget: destinations[0].price,
       travelers: 2,
     })
-  }, [location.state])
+  }, [location.state, selectedDestination])
+
+  const mapQuery = selectedDestination
+    ? `${selectedDestination.latitude},${selectedDestination.longitude}`
+    : tripPlan.destination
+  const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=10&output=embed`
 
   return (
     <section className="page-section details-page">
@@ -65,6 +82,16 @@ function TripDetails() {
               <li key={activity}>{activity}</li>
             ))}
           </ul>
+
+          <h2>Location map</h2>
+          <div className="destination-map">
+            <iframe
+              title={`${tripPlan.destination} map`}
+              src={mapUrl}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
         </aside>
       </div>
     </section>
